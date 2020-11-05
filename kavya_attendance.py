@@ -85,24 +85,22 @@ class Attendance():
             attendance_button = WebDriverWait(self.driver, 0).until(
                 EC.presence_of_element_located((By.XPATH, attendance_button_xpath)))
             attendance_button.click() # To click on the button
+            return True
         except TimeoutException:
             logger.info("attendance button not available on page")
+            return False
     
 
     def counter(self):
         now= datetime.now()
-        current_hour=int(now.strftime("%H"))
-        current_minute=int(now.strftime("%M"))
-        print("Current Hour =", current_hour, type(current_hour))
-        print("Current Minute =", current_minute, type(current_minute)) 
-        while(current_hour <=11):
-            while(current_minute >= 20 and current_minute <= 40):
-                self.fill_attendance()  
-                time.sleep(60)
+        while(int(now.strftime("%M")) <= 40):
+            if (self.fill_attendance()):
+                break
+            time.sleep(60)
                 
                  
         
 if __name__=="__main__":
-    at = Attendance(headless=False)
+    at = Attendance(headless=True)
     at.login()
     at.counter()
