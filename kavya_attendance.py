@@ -93,10 +93,11 @@ class Attendance():
 
     def counter(self):
         now= datetime.now()
-        while(int(now.strftime("%M")) <= 40):
-            if (self.fill_attendance()):
-                break
-            time.sleep(60)
+        while(int(now.strftime("%H")) <= 11):
+            while(int(now.strftime("%M")) >= 15 and int(now.strftime("%M")) <= 40):
+                if (self.fill_attendance()):
+                    break
+                time.sleep(60)
                 
                  
         
